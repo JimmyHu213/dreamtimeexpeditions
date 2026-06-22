@@ -32,6 +32,15 @@
 			"service": "dreamtimeexpeditions"
 		}
 	],
+	// Hyperdrive pools the connection to Supabase Postgres so the Worker can reach
+	// it over TCP. The password lives in the Hyperdrive config (Cloudflare-side), not here.
+	// Local preview uses WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE.
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "a49af603c66641598c4e1e4bed762d44"
+		}
+	],
 	"observability": {
 		"enabled": true
 	},

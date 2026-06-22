@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "drizzle-orm": "^0.38.3",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "pg-cloudflare": "^1.4.0"
   },
   "devDependencies": {
     "@types/pg": "^8.11.10",
