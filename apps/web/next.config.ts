@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	/* config options here */
+	// node-postgres + its Cloudflare socket shim contain workerd-specific code
+	// (pg-cloudflare imports `cloudflare:sockets`). Keep them external so the
+	// workerd runtime resolves them instead of esbuild trying to bundle them.
+	serverExternalPackages: ["pg", "pg-cloudflare"],
 };
 
 export default nextConfig;
