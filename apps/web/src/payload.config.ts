@@ -9,10 +9,25 @@ import type { CollectionConfig, GlobalConfig } from "payload";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Cloudflare bindings (D1 + R2) resolved from the Worker/dev context.
-const { env } = await getCloudflareContext({ async: true });
-type Env = { DB: Parameters<typeof sqliteD1Adapter>[0]["binding"]; MEDIA: Parameters<typeof r2Storage>[0]["bucket"] };
-const cfEnv = env as unknown as Env;
+// Resolve a Cloudflare binding lazily. The config is loaded in three contexts:
+// the Worker runtime, `next build`, and the Payload CLI (which transpiles to CJS
+// and forbids top-level await). A Proxy defers getCloudflareContext() until the
+// binding is actually used (request time), so the config loads everywhere.
+function lazyBinding<T extends object>(name: "DB" | "MEDIA"): T {
+  return new Proxy({} as T, {
+    get(_target, prop) {
+      const { env } = getCloudflareContext();
+      const binding = (env as unknown as Record<string, object>)[name];
+      const value = Reflect.get(binding, prop);
+      return typeof value === "function" ? value.bind(binding) : value;
+    },
+  });
+}
+
+const cfEnv = {
+  DB: lazyBinding<Parameters<typeof sqliteD1Adapter>[0]["binding"]>("DB"),
+  MEDIA: lazyBinding<Parameters<typeof r2Storage>[0]["bucket"]>("MEDIA"),
+};
 
 const Users: CollectionConfig = {
   slug: "users",
