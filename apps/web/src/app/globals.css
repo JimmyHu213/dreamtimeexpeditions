@@ -1,26 +1,146 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ink: #0b0e11;
+  --color-deep: #0f1f29;
+  --color-sea: #16323f;
+  --color-sand: #c8a86a;
+  --color-sand-soft: #d8c39a;
+  --color-mist: #f3efe7;
+  --color-stone: #9a9488;
+
+  --font-display: var(--font-display-face), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+}
+
 :root {
-	--background: #ffffff;
-	--foreground: #171717;
+  --maxw: 78rem;
+  --section-y: clamp(4.5rem, 11vw, 9.5rem);
 }
 
-@theme inline {
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
-	}
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-	background: var(--background);
-	color: var(--foreground);
-	font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-mist);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---- Typography ---- */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-sand);
+  font-weight: 500;
+}
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.02;
+  font-size: clamp(2.8rem, 8vw, 6rem);
+  letter-spacing: -0.02em;
+}
+.display-lg {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.06;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  letter-spacing: -0.015em;
+}
+.lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  line-height: 1.7;
+  color: color-mix(in oklab, var(--color-mist) 82%, transparent);
+}
+
+/* ---- Layout ---- */
+.shell {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+.section {
+  padding-block: var(--section-y);
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.7rem;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.btn-solid {
+  background: var(--color-sand);
+  color: var(--color-ink);
+}
+.btn-solid:hover {
+  background: var(--color-sand-soft);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  border: 1px solid color-mix(in oklab, var(--color-mist) 35%, transparent);
+  color: var(--color-mist);
+}
+.btn-ghost:hover {
+  border-color: var(--color-sand);
+  color: var(--color-sand);
+}
+
+/* ---- Form inputs ---- */
+.dt-input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid color-mix(in oklab, var(--color-mist) 22%, transparent);
+  border-radius: 0.6rem;
+  padding: 0.85rem 1rem;
+  color: var(--color-mist);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+.dt-input::placeholder {
+  color: var(--color-stone);
+}
+.dt-input:focus {
+  outline: none;
+  border-color: var(--color-sand);
+}
+.dt-input option {
+  color: #111;
+}
+
+/* ---- Decorative ---- */
+.rule {
+  height: 1px;
+  width: 100%;
+  background: color-mix(in oklab, var(--color-mist) 14%, transparent);
+}
+
+/* ---- Scroll reveal ---- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { animation: none; }
+  html { scroll-behavior: auto; }
 }
