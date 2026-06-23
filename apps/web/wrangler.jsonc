@@ -32,13 +32,20 @@
 			"service": "dreamtimeexpeditions"
 		}
 	],
-	// Hyperdrive pools the connection to Supabase Postgres so the Worker can reach
-	// it over TCP. The password lives in the Hyperdrive config (Cloudflare-side), not here.
-	// Local preview uses WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE.
-	"hyperdrive": [
+	// Payload CMS storage: content in D1 (SQLite), media files in R2.
+	// The marketing site is self-contained on Cloudflare-native storage — no
+	// Supabase/Hyperdrive here (that lives in the subdomain CRM app).
+	"d1_databases": [
 		{
-			"binding": "HYPERDRIVE",
-			"id": "a49af603c66641598c4e1e4bed762d44"
+			"binding": "DB",
+			"database_name": "dreamtime-cms",
+			"database_id": "4ca1cc48-a42c-4071-b4d8-619315f6db8b"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "dreamtime-media"
 		}
 	],
 	"observability": {
