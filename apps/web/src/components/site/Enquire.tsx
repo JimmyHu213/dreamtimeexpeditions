@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { site } from "@/content/site";
+import { site, type Voyage } from "@/content/site";
 
 // NOTE: submission is wired to the enquiries backend in the booking slice
 // (server action → DB). For now it validates and confirms client-side.
-export function Enquire() {
+export function Enquire({ intro, voyages }: { intro: string; voyages: Voyage[] }) {
   const { enquiry } = site;
   const [sent, setSent] = useState(false);
 
@@ -15,7 +15,7 @@ export function Enquire() {
         <div className="md:col-span-5">
           <p className="eyebrow">{enquiry.eyebrow}</p>
           <h2 className="display-lg mt-5 text-[var(--color-mist)]">{enquiry.title}</h2>
-          <p className="lead mt-6">{enquiry.body}</p>
+          <p className="lead mt-6">{intro}</p>
           <div className="mt-10 space-y-1 text-sm text-[color-mix(in_oklab,var(--color-mist)_70%,transparent)]">
             <p>{site.contact.location}</p>
             <p>{site.contact.email}</p>
@@ -50,7 +50,7 @@ export function Enquire() {
                   </span>
                   <select name="voyage" defaultValue="" className="dt-input">
                     <option value="">No preference yet</option>
-                    {site.voyages.map((v) => (
+                    {voyages.map((v) => (
                       <option key={v.slug} value={v.slug}>
                         {v.title}
                       </option>

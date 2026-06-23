@@ -1,6 +1,6 @@
-import { site } from "@/content/site";
+import type { Voyage } from "@/content/site";
 
-export function Voyages() {
+export function Voyages({ voyages }: { voyages: Voyage[] }) {
   return (
     <section id="voyages" className="section bg-[var(--color-ink)]">
       <div data-reveal className="shell">
@@ -11,7 +11,7 @@ export function Voyages() {
           </h2>
         </div>
         <div className="grid gap-px overflow-hidden rounded border border-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] bg-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] sm:grid-cols-2">
-          {site.voyages.map((v) => (
+          {voyages.map((v) => (
             <article
               key={v.slug}
               className="group relative flex min-h-[22rem] flex-col justify-end overflow-hidden bg-[var(--color-deep)] p-8"

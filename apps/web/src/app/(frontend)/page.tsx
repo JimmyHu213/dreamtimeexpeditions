@@ -6,18 +6,23 @@ import { Gallery } from "@/components/site/Gallery";
 import { Testimonials } from "@/components/site/Testimonials";
 import { About } from "@/components/site/About";
 import { Enquire } from "@/components/site/Enquire";
+import { getSiteData } from "@/lib/getSiteData";
 
-export default function Home() {
+// Reads marketing content from Payload (D1) at request time.
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const data = await getSiteData();
   return (
     <main>
-      <Hero />
+      <Hero hero={data.hero} />
       <Experience />
       <Vessel />
-      <Voyages />
+      <Voyages voyages={data.voyages} />
       <Gallery />
-      <Testimonials />
+      <Testimonials items={data.testimonials} />
       <About />
-      <Enquire />
+      <Enquire intro={data.enquiryIntro} voyages={data.voyages} />
     </main>
   );
 }

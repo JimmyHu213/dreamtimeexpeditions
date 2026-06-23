@@ -122,7 +122,10 @@ const SiteContent: GlobalConfig = {
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
   editor: lexicalEditor(),
-  db: sqliteD1Adapter({ binding: cfEnv.DB }),
+  // push: true auto-syncs the schema to D1 (dev + prod) so the tables are
+  // created on first run without the migrate CLI (which can't load the Workers
+  // config). Harden with generated migrations later.
+  db: sqliteD1Adapter({ binding: cfEnv.DB, push: true }),
   collections: [Users, Media, Vessels, Voyages, Testimonials, Enquiries],
   globals: [SiteContent],
   admin: { user: "users" },

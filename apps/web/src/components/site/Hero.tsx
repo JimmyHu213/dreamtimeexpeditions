@@ -1,7 +1,6 @@
-import { site } from "@/content/site";
+import type { SiteData } from "@/lib/getSiteData";
 
-export function Hero() {
-  const { hero } = site;
+export function Hero({ hero }: { hero: SiteData["hero"] }) {
   return (
     <section
       id="top"
