@@ -8,7 +8,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "web",
+	"name": "dreamtimeexpeditions",
 	"main": ".open-next/worker.js",
 	"compatibility_date": "2026-06-22",
 	"compatibility_flags": [
@@ -29,7 +29,16 @@
 			// Self-reference service binding, the service name must match the worker name
 			// see https://opennext.js.org/cloudflare/caching
 			"binding": "WORKER_SELF_REFERENCE",
-			"service": "web"
+			"service": "dreamtimeexpeditions"
+		}
+	],
+	// Hyperdrive pools the connection to Supabase Postgres so the Worker can reach
+	// it over TCP. The password lives in the Hyperdrive config (Cloudflare-side), not here.
+	// Local preview uses WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE.
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "a49af603c66641598c4e1e4bed762d44"
 		}
 	],
 	"observability": {

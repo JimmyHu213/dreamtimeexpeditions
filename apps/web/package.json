@@ -14,8 +14,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@dreamtime/db": "workspace:*",
     "@opennextjs/cloudflare": "^1.19.9",
     "next": "16.2.6",
+    "pg-cloudflare": "^1.4.0",
     "react": "^19.1.7",
     "react-dom": "^19.1.7"
   },
