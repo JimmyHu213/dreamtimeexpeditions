@@ -79,6 +79,11 @@ For multi-step tasks, state a brief plan with verification at each step.
 
 ## 8. PR Expectations
 
+- **No code commits on `main`.** `main` is updated only by merging reviewed PRs.
+- **Every change set goes through a feature branch in a dedicated git worktree.** Branch
+  off `main` (e.g. `feat/<scope>`), do the work in the worktree, verify it there, then
+  open a PR back into `main`. Never push feature commits directly to `main`.
+- One concern per PR; keep them small and focused.
 - Fill out the PR template completely.
 - Ensure all CI checks pass before requesting review.
 - Respond to CodeRabbit/Copilot findings — dismiss with a reason or fix.

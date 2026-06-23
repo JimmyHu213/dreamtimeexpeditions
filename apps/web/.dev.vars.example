@@ -1,0 +1,3 @@
+# Copy to .dev.vars (gitignored) for local Worker dev/preview.
+# Local emulation of the Hyperdrive binding — point it at your Supabase Postgres.
+CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="postgresql://postgres:<password>@db.<ref>.supabase.co:5432/postgres?sslmode=no-verify"
