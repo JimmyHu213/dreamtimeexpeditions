@@ -15,19 +15,21 @@ export function Hero() {
       <div className="shell w-full pb-[clamp(3rem,9vw,7rem)]">
         <div className="max-w-3xl reveal">
           <p className="eyebrow mb-6">{hero.eyebrow}</p>
-          <h1 className="display-xl text-[var(--color-mist)]">{hero.headline}</h1>
-          <p className="lead mt-7 max-w-xl">{hero.subhead}</p>
+          <h1 className="display-xl text-[var(--color-on-image)]">{hero.headline}</h1>
+          <p className="lead mt-7 max-w-xl" style={{ color: "var(--color-on-image)" }}>
+            {hero.subhead}
+          </p>
           <div className="mt-9 flex flex-wrap gap-4">
             <a href="#voyages" className="btn btn-solid">
               Discover the Voyages
             </a>
-            <a href="#enquire" className="btn btn-ghost">
+            <a href="#enquire" className="btn btn-on-dark">
               Begin an Enquiry
             </a>
           </div>
         </div>
       </div>
-      <div className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 text-xs tracking-[0.3em] text-[color-mix(in_oklab,var(--color-mist)_55%,transparent)] md:block">
+      <div className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 text-xs tracking-[0.3em] text-[color-mix(in_oklab,var(--color-on-image)_55%,transparent)] md:block">
         SCROLL
       </div>
     </section>

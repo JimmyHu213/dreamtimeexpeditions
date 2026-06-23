@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #0b0e11;
-  --color-deep: #0f1f29;
-  --color-sea: #16323f;
-  --color-sand: #c8a86a;
-  --color-sand-soft: #d8c39a;
-  --color-mist: #f3efe7;
-  --color-stone: #9a9488;
+  /* Light, warm luxury palette. Roles (names kept for stability):
+     ink  = page background, deep = white panel, sea = sand-tinted panel,
+     mist = primary text, on-image = text over photos, sand = gold accent. */
+  --color-ink: #faf7f1;        /* page background (warm ivory) */
+  --color-deep: #ffffff;       /* white alt-section panel */
+  --color-sea: #f1e9da;        /* sand-tinted panel */
+  --color-sand: #a9853f;       /* deep gold accent / buttons */
+  --color-sand-soft: #c0a05f;
+  --color-mist: #232019;       /* primary text (warm near-black) */
+  --color-on-image: #f7f3ec;   /* text placed over photographs */
+  --color-stone: #6f695d;      /* muted text / labels */
 
   --font-display: var(--font-display-face), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
@@ -78,8 +82,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.95rem 1.7rem;
-  border-radius: 999px;
+  padding: 0.9rem 1.6rem;
+  border-radius: 0.4rem;
   font-size: 0.92rem;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -88,19 +92,28 @@ body {
 }
 .btn-solid {
   background: var(--color-sand);
-  color: var(--color-ink);
+  color: #fff;
 }
 .btn-solid:hover {
-  background: var(--color-sand-soft);
+  background: color-mix(in oklab, var(--color-sand) 88%, #000);
   transform: translateY(-1px);
 }
 .btn-ghost {
-  border: 1px solid color-mix(in oklab, var(--color-mist) 35%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-mist) 30%, transparent);
   color: var(--color-mist);
 }
 .btn-ghost:hover {
   border-color: var(--color-sand);
   color: var(--color-sand);
+}
+/* For buttons over photographs (hero). */
+.btn-on-dark {
+  border: 1px solid color-mix(in oklab, var(--color-on-image) 50%, transparent);
+  color: var(--color-on-image);
+}
+.btn-on-dark:hover {
+  border-color: var(--color-on-image);
+  background: color-mix(in oklab, var(--color-on-image) 12%, transparent);
 }
 
 /* ---- Form inputs ---- */
@@ -108,7 +121,7 @@ body {
   width: 100%;
   background: transparent;
   border: 1px solid color-mix(in oklab, var(--color-mist) 22%, transparent);
-  border-radius: 0.6rem;
+  border-radius: 0.4rem;
   padding: 0.85rem 1rem;
   color: var(--color-mist);
   font-size: 0.95rem;

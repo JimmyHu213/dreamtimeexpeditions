@@ -20,7 +20,7 @@ export function Gallery() {
                   minHeight: i === 0 ? "100%" : undefined,
                 }}
               />
-              <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(11,14,17,0.85)] to-transparent p-4 text-sm text-[var(--color-mist)]">
+              <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(11,14,17,0.85)] to-transparent p-4 text-sm text-[var(--color-on-image)]">
                 {g.caption}
               </figcaption>
             </figure>
