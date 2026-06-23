@@ -1,13 +1,9 @@
 import type { NextConfig } from "next";
+import { withPayload } from "@payloadcms/next/withPayload";
 
-const nextConfig: NextConfig = {
-	// node-postgres + its Cloudflare socket shim contain workerd-specific code
-	// (pg-cloudflare imports `cloudflare:sockets`). Keep them external so the
-	// workerd runtime resolves them instead of esbuild trying to bundle them.
-	serverExternalPackages: ["pg", "pg-cloudflare"],
-};
+const nextConfig: NextConfig = {};
 
-export default nextConfig;
+export default withPayload(nextConfig);
 
 // Enable calling `getCloudflareContext()` in `next dev` only. Guarding to
 // development keeps production builds (incl. Workers Builds) from requiring a

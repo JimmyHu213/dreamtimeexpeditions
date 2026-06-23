@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { ScrollReveal } from "@/components/site/ScrollReveal";
 import { site } from "@/content/site";
-import "./globals.css";
+import "../globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const display = Cormorant_Garamond({
