@@ -68,6 +68,8 @@ For multi-step tasks, state a brief plan with verification at each step.
 - Keep PRs small and focused — one concern per PR.
 - Write meaningful commit messages explaining why, not what.
 - Never force-push to shared branches.
+- Never commit directly to `main`, and never open a PR with `main` as the source branch. All code changes MUST land on `main` through a PR from a feature branch — CI/CD runs on every PR, so this is the only path that gets validated and deployed.
+- New feature branches MUST be created as a git worktree (`git worktree add ../<branch> <branch>`), not a `git checkout` in place. A worktree gives the branch its own path, so subagents can work in it concurrently. Two branches cannot be checked out at the same path — subagents sharing one path cannot switch branches independently, so without a worktree they would collide.
 
 ## 8. PR Expectations
 
