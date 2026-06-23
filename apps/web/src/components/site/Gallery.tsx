@@ -8,7 +8,7 @@ export function Gallery() {
           {site.gallery.map((g, i) => (
             <figure
               key={i}
-              className={`group relative overflow-hidden rounded-lg ${i === 0 ? "col-span-2 md:col-span-2 md:row-span-2" : ""}`}
+              className={`group relative overflow-hidden rounded ${i === 0 ? "col-span-2 md:col-span-2 md:row-span-2" : ""}`}
             >
               <div
                 className="aspect-[4/3] w-full transition-transform duration-700 group-hover:scale-105"

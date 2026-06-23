@@ -24,7 +24,7 @@ export function Enquire() {
 
         <div className="md:col-span-6 md:col-start-7">
           {sent ? (
-            <div className="flex h-full min-h-48 flex-col justify-center rounded-2xl border border-[color-mix(in_oklab,var(--color-sand)_40%,transparent)] p-10">
+            <div className="flex h-full min-h-48 flex-col justify-center rounded border border-[color-mix(in_oklab,var(--color-sand)_40%,transparent)] p-10">
               <p className="font-display text-3xl text-[var(--color-mist)]">Thank you.</p>
               <p className="lead mt-3">
                 Your enquiry is with the voyage master — expect a personal reply within a day.

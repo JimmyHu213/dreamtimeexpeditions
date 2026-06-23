@@ -10,7 +10,7 @@ export function Voyages() {
             Four ways to meet the coast
           </h2>
         </div>
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] bg-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] sm:grid-cols-2">
+        <div className="grid gap-px overflow-hidden rounded border border-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] bg-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] sm:grid-cols-2">
           {site.voyages.map((v) => (
             <article
               key={v.slug}
