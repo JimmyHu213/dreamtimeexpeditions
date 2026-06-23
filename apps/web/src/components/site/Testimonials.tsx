@@ -3,7 +3,7 @@ import { site } from "@/content/site";
 export function Testimonials() {
   return (
     <section className="section bg-[var(--color-sea)]">
-      <div className="shell">
+      <div data-reveal className="shell">
         <p className="eyebrow mb-14">In Their Words</p>
         <div className="grid gap-12 md:grid-cols-3">
           {site.testimonials.map((t, i) => (

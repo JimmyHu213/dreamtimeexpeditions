@@ -3,7 +3,7 @@ import { site } from "@/content/site";
 export function Voyages() {
   return (
     <section id="voyages" className="section bg-[var(--color-ink)]">
-      <div className="shell">
+      <div data-reveal className="shell">
         <div className="mb-14 max-w-2xl">
           <p className="eyebrow">Voyages &amp; Itineraries</p>
           <h2 className="display-lg mt-5 text-[var(--color-mist)]">

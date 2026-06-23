@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Cormorant_Garamond } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
+import { ScrollReveal } from "@/components/site/ScrollReveal";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteHeader />
         {children}
         <SiteFooter />
+        <ScrollReveal />
       </body>
     </html>
   );

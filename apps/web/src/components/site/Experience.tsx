@@ -4,7 +4,7 @@ export function Experience() {
   const { experience } = site;
   return (
     <section id="experience" className="section bg-[var(--color-ink)]">
-      <div className="shell grid gap-12 md:grid-cols-12">
+      <div data-reveal className="shell grid gap-12 md:grid-cols-12">
         <div className="md:col-span-4">
           <p className="eyebrow">{experience.eyebrow}</p>
           <h2 className="display-lg mt-5 text-[var(--color-mist)]">{experience.title}</h2>

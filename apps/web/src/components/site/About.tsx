@@ -4,7 +4,7 @@ export function About() {
   const { about } = site;
   return (
     <section id="about" className="section bg-[var(--color-ink)]">
-      <div className="shell grid gap-12 md:grid-cols-12">
+      <div data-reveal className="shell grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
           <p className="eyebrow">{about.eyebrow}</p>
           <h2 className="display-lg mt-5 text-[var(--color-mist)]">{about.title}</h2>

@@ -11,7 +11,7 @@ export function Enquire() {
 
   return (
     <section id="enquire" className="section bg-[var(--color-deep)]">
-      <div className="shell grid gap-14 md:grid-cols-12">
+      <div data-reveal className="shell grid gap-14 md:grid-cols-12">
         <div className="md:col-span-5">
           <p className="eyebrow">{enquiry.eyebrow}</p>
           <h2 className="display-lg mt-5 text-[var(--color-mist)]">{enquiry.title}</h2>

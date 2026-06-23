@@ -13,7 +13,7 @@ export function Vessel() {
             backgroundPosition: "center",
           }}
         />
-        <div className="flex items-center px-[clamp(1.5rem,5vw,5rem)] py-[clamp(3.5rem,8vw,7rem)]">
+        <div data-reveal className="flex items-center px-[clamp(1.5rem,5vw,5rem)] py-[clamp(3.5rem,8vw,7rem)]">
           <div className="max-w-md">
             <p className="eyebrow">{vessel.eyebrow}</p>
             <h2 className="display-lg mt-5 text-[var(--color-mist)]">{vessel.name}</h2>

@@ -3,7 +3,7 @@ import { site } from "@/content/site";
 export function Gallery() {
   return (
     <section id="gallery" className="bg-[var(--color-ink)] pb-[var(--section-y)]">
-      <div className="shell">
+      <div data-reveal className="shell">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
           {site.gallery.map((g, i) => (
             <figure
