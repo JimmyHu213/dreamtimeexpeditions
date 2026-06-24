@@ -5,7 +5,8 @@ import { r2Storage } from "@payloadcms/storage-r2";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import path from "path";
 import { fileURLToPath } from "url";
-import type { CollectionConfig, GlobalConfig } from "payload";
+import { collections } from "./payload/collections";
+import { globals } from "./payload/globals";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,105 +30,23 @@ const cfEnv = {
   MEDIA: lazyBinding<Parameters<typeof r2Storage>[0]["bucket"]>("MEDIA"),
 };
 
-const Users: CollectionConfig = {
-  slug: "users",
-  auth: true,
-  admin: { useAsTitle: "email" },
-  fields: [{ name: "name", type: "text" }],
-};
-
-const Media: CollectionConfig = {
-  slug: "media",
-  access: { read: () => true },
-  upload: true,
-  fields: [{ name: "alt", type: "text", required: true }],
-};
-
-const Vessels: CollectionConfig = {
-  slug: "vessels",
-  access: { read: () => true },
-  admin: { useAsTitle: "name" },
-  fields: [
-    { name: "name", type: "text", required: true },
-    { name: "tagline", type: "text" },
-    { name: "story", type: "richText" },
-    {
-      name: "specs",
-      type: "array",
-      fields: [
-        { name: "label", type: "text", required: true },
-        { name: "value", type: "text", required: true },
-      ],
-    },
-    { name: "heroImage", type: "upload", relationTo: "media" },
-  ],
-};
-
-const Voyages: CollectionConfig = {
-  slug: "voyages",
-  access: { read: () => true },
-  admin: { useAsTitle: "title" },
-  fields: [
-    { name: "title", type: "text", required: true },
-    { name: "slug", type: "text", required: true, unique: true, index: true },
-    { name: "summary", type: "textarea" },
-    { name: "durationNights", type: "number", required: true },
-    { name: "route", type: "text" },
-    { name: "priceFrom", type: "number" },
-    { name: "kind", type: "select", defaultValue: "scheduled", options: ["scheduled", "charter"], required: true },
-    { name: "image", type: "upload", relationTo: "media" },
-  ],
-};
-
-const Testimonials: CollectionConfig = {
-  slug: "testimonials",
-  access: { read: () => true },
-  admin: { useAsTitle: "author" },
-  fields: [
-    { name: "quote", type: "textarea", required: true },
-    { name: "author", type: "text", required: true },
-    { name: "location", type: "text" },
-  ],
-};
-
-const Enquiries: CollectionConfig = {
-  slug: "enquiries",
-  access: { create: () => true, read: () => false, update: () => false, delete: () => false },
-  admin: { useAsTitle: "email" },
-  fields: [
-    { name: "name", type: "text", required: true },
-    { name: "email", type: "email", required: true },
-    { name: "phone", type: "text" },
-    { name: "message", type: "textarea", required: true },
-  ],
-};
-
-const SiteContent: GlobalConfig = {
-  slug: "site-content",
-  access: { read: () => true },
-  fields: [
-    { name: "brandName", type: "text", required: true, defaultValue: "Dreamtime Expeditions" },
-    { name: "heroEyebrow", type: "text" },
-    { name: "heroHeadline", type: "text", required: true },
-    { name: "heroSubhead", type: "textarea" },
-    { name: "heroImage", type: "upload", relationTo: "media" },
-    { name: "experienceTitle", type: "text" },
-    { name: "experienceBody", type: "richText" },
-    { name: "aboutTitle", type: "text" },
-    { name: "aboutBody", type: "richText" },
-    { name: "enquiryIntro", type: "textarea" },
-  ],
-};
+// Require the secret at runtime, but allow `next build` (Workers Builds doesn't
+// expose PAYLOAD_SECRET at build time) to proceed with a throwaway placeholder.
+const isBuild = process.env.NEXT_PHASE === "phase-production-build";
+const payloadSecret = process.env.PAYLOAD_SECRET;
+if (!payloadSecret && !isBuild) {
+  throw new Error("PAYLOAD_SECRET is required");
+}
 
 export default buildConfig({
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret: payloadSecret || "build-time-placeholder-not-used-at-runtime",
   editor: lexicalEditor(),
   // push: true auto-syncs the schema to D1 (dev + prod) so the tables are
   // created on first run without the migrate CLI (which can't load the Workers
   // config). Harden with generated migrations later.
   db: sqliteD1Adapter({ binding: cfEnv.DB, push: true }),
-  collections: [Users, Media, Vessels, Voyages, Testimonials, Enquiries],
-  globals: [SiteContent],
+  collections,
+  globals,
   admin: { user: "users" },
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
   plugins: [

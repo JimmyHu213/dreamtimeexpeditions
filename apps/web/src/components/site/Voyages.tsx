@@ -32,7 +32,7 @@ export function Voyages({ voyages }: { voyages: Voyage[] }) {
               </p>
               <div className="mt-6 flex items-center justify-between">
                 <span className="text-sm text-[var(--color-on-image)]">
-                  {v.priceFrom ? `From $${v.priceFrom.toLocaleString()} pp` : "Priced on request"}
+                  {v.priceFrom != null ? `From $${v.priceFrom.toLocaleString()} pp` : "Priced on request"}
                 </span>
                 <a href="#enquire" className="text-sm text-[var(--color-sand)] transition-opacity hover:opacity-80">
                   Enquire →
