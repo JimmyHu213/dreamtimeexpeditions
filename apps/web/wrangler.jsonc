@@ -39,7 +39,10 @@
 		{
 			"binding": "DB",
 			"database_name": "dreamtime-cms",
-			"database_id": "4ca1cc48-a42c-4071-b4d8-619315f6db8b"
+			"database_id": "4ca1cc48-a42c-4071-b4d8-619315f6db8b",
+			// Payload's `push` only runs in dev. Production tables are created by
+			// applying these migrations: `wrangler d1 migrations apply dreamtime-cms --remote`.
+			"migrations_dir": "migrations"
 		}
 	],
 	"r2_buckets": [

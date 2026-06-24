@@ -41,9 +41,13 @@ if (!payloadSecret && !isBuild) {
 export default buildConfig({
   secret: payloadSecret || "build-time-placeholder-not-used-at-runtime",
   editor: lexicalEditor(),
-  // push: true auto-syncs the schema to D1 (dev + prod) so the tables are
-  // created on first run without the migrate CLI (which can't load the Workers
-  // config). Harden with generated migrations later.
+  // push: true syncs the schema to the LOCAL D1 in dev only — the adapter gates
+  // push to NODE_ENV !== 'production', so it never runs on the deployed Worker.
+  // Production tables come from the D1 migrations in ./migrations:
+  // `wrangler d1 migrations apply dreamtime-cms --remote`. The Payload migrate
+  // CLI can't run here (loading the config pulls in @opennextjs/cloudflare,
+  // which throws in plain Node), so migrations are generated from the dev push
+  // schema via `wrangler d1 export`.
   db: sqliteD1Adapter({ binding: cfEnv.DB, push: true }),
   collections,
   globals,
