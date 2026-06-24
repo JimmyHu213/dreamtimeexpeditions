@@ -49,11 +49,17 @@ For multi-step tasks, state a brief plan with verification at each step.
 
 ## 5. Project Context
 
-<!-- Fill in per project -->
-<!-- - Tech stack: -->
-<!-- - Architecture overview: -->
-<!-- - Key dependencies: -->
-<!-- - Directory structure conventions: -->
+**Dreamtime Expeditions** — a high-end expedition cruise platform. One unified Next.js app + one Supabase backend, with role-gated faces over five subsystems (marketing, booking, operations console, AI agents, social hub). Built in slices; slice 1 = marketing site + booking.
+
+**Tech stack:**
+- **Monorepo:** Turborepo + pnpm workspaces. `apps/web` + `packages/{core,db,finance,ui}`.
+- **App:** Next.js (App Router) via OpenNext, deployed to **Cloudflare Workers**.
+- **Backend:** Supabase — Postgres, Auth, Storage, Realtime. **RLS is the single RBAC layer** for both human users and AI agents.
+- **Data access:** Drizzle ORM (`packages/db`) over the Supabase Postgres.
+- **Payments:** Stripe only, behind a `FinanceProvider` adapter (Xero snaps in later). Never build accounting/tax logic ourselves.
+- **CMS:** Payload CMS embedded in the Next.js app, same Supabase Postgres.
+- **AI:** specialized agents, each with its own MCP toolset, metered via OpenRouter; framework chosen per slice.
+- **Deploy:** Cloudflare Workers Builds (native Git integration), root dir `apps/web`, deploy command `pnpm run deploy`.
 
 ## 6. Coding Standards
 
@@ -68,6 +74,8 @@ For multi-step tasks, state a brief plan with verification at each step.
 - Keep PRs small and focused — one concern per PR.
 - Write meaningful commit messages explaining why, not what.
 - Never force-push to shared branches.
+- Never commit directly to `main`, and never open a PR with `main` as the source branch. All code changes MUST land on `main` through a PR from a feature branch — CI/CD runs on every PR, so this is the only path that gets validated and deployed.
+- New feature branches MUST be created as a git worktree (`git worktree add ../<branch> <branch>`), not a `git checkout` in place. A worktree gives the branch its own path, so subagents can work in it concurrently. Two branches cannot be checked out at the same path — subagents sharing one path cannot switch branches independently, so without a worktree they would collide.
 
 ## 8. PR Expectations
 
@@ -82,7 +90,28 @@ For multi-step tasks, state a brief plan with verification at each step.
 
 ## 9. File Organization
 
-<!-- Fill in per project -->
-<!-- - Describe your directory structure conventions here -->
-- Co-locate related files.
-- Avoid deep nesting.
+Monorepo layout (pnpm workspaces — `apps/*`, `packages/*`):
+
+```
+apps/
+  web/                  # the single Next.js app (OpenNext → Cloudflare Workers)
+    src/
+      app/              # App Router: routes, layouts, route handlers, server actions
+      components/       # app-specific React components (not shared → packages/ui)
+      lib/              # app-specific helpers, server/client utilities
+    public/             # static assets
+packages/
+  core/                 # @dreamtime/core  — shared domain types & business logic (framework-agnostic)
+  db/                   # @dreamtime/db    — Drizzle schema, migrations, query helpers
+  finance/              # @dreamtime/finance — FinanceProvider adapter (Stripe today, Xero later)
+  ui/                   # @dreamtime/ui    — shared, presentational React components
+```
+
+Conventions:
+- **Packages are imported as `@dreamtime/<name>`**, never by relative path across package boundaries.
+- **Decide where code lives by reuse, not convenience:** shared domain logic → `core`; DB access → `db`; payments → `finance`; reusable UI → `ui`. Anything used by only one app stays in `apps/web`.
+- **`db` owns all schema and migrations.** No app or other package defines tables or runs raw migrations.
+- **`finance` is the only place that touches Stripe/payment SDKs** — keep it behind the `FinanceProvider` interface so the provider can be swapped without touching callers.
+- Each package exposes a single public entry (`src/index.ts`); keep internals unexported.
+- Co-locate related files (component + its styles/tests/stories together).
+- Avoid deep nesting — prefer flat, well-named directories.
