@@ -8,7 +8,7 @@ export function Vessel() {
         <div
           className="min-h-[60vh] md:min-h-[88vh]"
           style={{
-            backgroundImage: `linear-gradient(to right, rgba(15,31,41,0) 60%, rgba(15,31,41,0.6) 100%), url(${vessel.image})`,
+            backgroundImage: `linear-gradient(to right, rgba(255,255,255,0) 70%, rgba(255,255,255,0.85) 100%), url(${vessel.image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

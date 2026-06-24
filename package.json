@@ -25,6 +25,9 @@
       "sharp",
       "workerd",
       "unrs-resolver"
-    ]
+    ],
+    "overrides": {
+      "undici": "7.28.0"
+    }
   }
 }

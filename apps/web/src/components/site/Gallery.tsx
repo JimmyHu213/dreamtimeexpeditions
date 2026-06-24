@@ -8,7 +8,7 @@ export function Gallery() {
           {site.gallery.map((g, i) => (
             <figure
               key={i}
-              className={`group relative overflow-hidden rounded-lg ${i === 0 ? "col-span-2 md:col-span-2 md:row-span-2" : ""}`}
+              className={`group relative overflow-hidden rounded ${i === 0 ? "col-span-2 md:col-span-2 md:row-span-2" : ""}`}
             >
               <div
                 className="aspect-[4/3] w-full transition-transform duration-700 group-hover:scale-105"
@@ -20,7 +20,7 @@ export function Gallery() {
                   minHeight: i === 0 ? "100%" : undefined,
                 }}
               />
-              <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(11,14,17,0.85)] to-transparent p-4 text-sm text-[var(--color-mist)]">
+              <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(11,14,17,0.85)] to-transparent p-4 text-sm text-[var(--color-on-image)]">
                 {g.caption}
               </figcaption>
             </figure>

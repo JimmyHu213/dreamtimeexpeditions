@@ -1,6 +1,6 @@
-import { site } from "@/content/site";
+import type { Voyage } from "@/content/site";
 
-export function Voyages() {
+export function Voyages({ voyages }: { voyages: Voyage[] }) {
   return (
     <section id="voyages" className="section bg-[var(--color-ink)]">
       <div data-reveal className="shell">
@@ -10,8 +10,8 @@ export function Voyages() {
             Four ways to meet the coast
           </h2>
         </div>
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] bg-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] sm:grid-cols-2">
-          {site.voyages.map((v) => (
+        <div className="grid gap-px overflow-hidden rounded border border-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] bg-[color-mix(in_oklab,var(--color-mist)_12%,transparent)] sm:grid-cols-2">
+          {voyages.map((v) => (
             <article
               key={v.slug}
               className="group relative flex min-h-[22rem] flex-col justify-end overflow-hidden bg-[var(--color-deep)] p-8"
@@ -24,15 +24,15 @@ export function Voyages() {
               <div className="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-[var(--color-sand)]">
                 <span>{v.kind === "charter" ? "Private Charter" : `${v.nights} Nights`}</span>
                 <span className="h-px w-6 bg-[var(--color-sand)] opacity-60" />
-                <span className="text-[var(--color-stone)]">{v.route}</span>
+                <span className="text-[color-mix(in_oklab,var(--color-on-image)_70%,transparent)]">{v.route}</span>
               </div>
-              <h3 className="mt-4 font-display text-3xl leading-tight text-[var(--color-mist)]">{v.title}</h3>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-[color-mix(in_oklab,var(--color-mist)_75%,transparent)]">
+              <h3 className="mt-4 font-display text-3xl leading-tight text-[var(--color-on-image)]">{v.title}</h3>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-[color-mix(in_oklab,var(--color-on-image)_80%,transparent)]">
                 {v.summary}
               </p>
               <div className="mt-6 flex items-center justify-between">
-                <span className="text-sm text-[var(--color-mist)]">
-                  {v.priceFrom ? `From $${v.priceFrom.toLocaleString()} pp` : "Priced on request"}
+                <span className="text-sm text-[var(--color-on-image)]">
+                  {v.priceFrom != null ? `From $${v.priceFrom.toLocaleString()} pp` : "Priced on request"}
                 </span>
                 <a href="#enquire" className="text-sm text-[var(--color-sand)] transition-opacity hover:opacity-80">
                   Enquire →
