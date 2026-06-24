@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { site, type Voyage } from "@/content/site";
+import { submitEnquiry } from "@/app/(frontend)/actions";
 
-// NOTE: submission is wired to the enquiries backend in the booking slice
-// (server action → DB). For now it validates and confirms client-side.
 export function Enquire({ intro, voyages }: { intro: string; voyages: Voyage[] }) {
   const { enquiry } = site;
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <section id="enquire" className="section bg-[var(--color-deep)]">
@@ -33,9 +34,21 @@ export function Enquire({ intro, voyages }: { intro: string; voyages: Voyage[] }
           ) : (
             <form
               className="space-y-5"
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
-                setSent(true);
+                const fd = new FormData(e.currentTarget);
+                setSubmitting(true);
+                setError(null);
+                const res = await submitEnquiry({
+                  name: String(fd.get("name") ?? ""),
+                  email: String(fd.get("email") ?? ""),
+                  phone: String(fd.get("phone") ?? ""),
+                  message: String(fd.get("message") ?? ""),
+                  voyage: String(fd.get("voyage") ?? ""),
+                });
+                setSubmitting(false);
+                if (res.ok) setSent(true);
+                else setError(res.error);
               }}
             >
               <div className="grid gap-5 sm:grid-cols-2">
@@ -51,7 +64,7 @@ export function Enquire({ intro, voyages }: { intro: string; voyages: Voyage[] }
                   <select name="voyage" defaultValue="" className="dt-input">
                     <option value="">No preference yet</option>
                     {voyages.map((v) => (
-                      <option key={v.slug} value={v.slug}>
+                      <option key={v.slug} value={v.title}>
                         {v.title}
                       </option>
                     ))}
@@ -64,8 +77,9 @@ export function Enquire({ intro, voyages }: { intro: string; voyages: Voyage[] }
                 </span>
                 <textarea name="message" rows={4} required className="dt-input resize-none" />
               </label>
-              <button type="submit" className="btn btn-solid">
-                Send enquiry
+              {error && <p className="text-sm text-[var(--color-sand)]">{error}</p>}
+              <button type="submit" disabled={submitting} className="btn btn-solid disabled:opacity-60">
+                {submitting ? "Sending…" : "Send enquiry"}
               </button>
             </form>
           )}
