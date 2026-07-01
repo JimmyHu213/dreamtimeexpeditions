@@ -15,7 +15,7 @@
     "deploy": "turbo run deploy --filter=@dreamtime/web"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.5.3",
+    "@commitlint/cli": "^21.2.0",
     "@commitlint/config-conventional": "^21.0.2",
     "turbo": "^2.3.3"
   },
